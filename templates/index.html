@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{url_for('static', filename='./index.css')}}"> 
+  <title>PapagoAPI</title>
+</head>
+<body><body>
+  <div class='grid-container' >
+    <main>
+    <div>
+      <form action='/trans' id='submit-form' method='get'>
+        <table>
+          <thaed>
+            <tr>상품명</tr>
+            <tr>컬러</tr>
+            <tr>사이즈</tr>
+          </thaed>
+            <tr>
+              <td><input placeholder='name' id='name' name='name'></input></td>
+              <td><input placeholder='color' id='color' name='color'></td>
+              <td><input placeholder='size' id='size' name='size'></input></td>
+            </tr>
+        </table>  
+        <p><button type='submit'>Create Code</button></p>
+      </form>  
+    </div>
+    <div id='results' ></div>
+    </main>
+    <footer>All rights reserved by Londonlabel &copy<script>document.write(new Date().getFullYear())</script></footer>
+  </div> 
+  <!--<script src='index.js'></script>-->
+</body>
+</html>
