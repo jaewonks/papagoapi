@@ -1,36 +1,48 @@
-// configuration(환경설정)
-const apiUrl = document.location.href.startsWith('http://localhost')
-  ? 'http://localhost:5000'
-  : '';
-
-const range = async ({start, end}) => {
-  try { //서버로 정보를 보낸다
-    const response = await axios({
-        url: `${apiUrl}/range`,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        data: {
-          start, 
-          end
-        },
+const cloneRow = () => {
+  var rowAmmount = 2;
+  var getTotalRows = $('table > tbody').children().length;
+  console.log(getTotalRows)
+  for (var i = -1; i < rowAmmount-1; i++) {
+    var row = document.getElementById("row"); // find row to copy
+    var table = document.getElementById("table"); // find table to append to
+    var clone = row.cloneNode(true); // copy children too
+    clone.id = "newRow" + (getTotalRows + i); // change id or other attributes/contents
+    clone.classList.remove('hidden');
+    table.appendChild(clone); // add new row to end of table
+    $('#newRow' + (getTotalRows + i)).children().each(function() {
+      $(this).children().attr('id', $(this).children().attr('id') + (getTotalRows + i));
     });
-    if(response.statusText !== 'OK') {
-        throw new Error(response.data.message);
-    }  
-    return response.data;
-  } catch(err) {
-    return { error : err.response.data.message || err.message }
+}}
+
+$('input').bind('paste', function (e) {
+  var $start = $(this);
+  var source
+
+  //check for access to clipboard from window or event
+  if (window.clipboardData !== undefined) {
+      source = window.clipboardData
+  } else {
+      source = e.originalEvent.clipboardData;
   }
-}
-
-document.getElementById('submit-form').addEventListener('submit', async(e) => {
-  e.preventDefault();
-  const data = await range({
-    start: document.getElementById('start').value,
-    end: document.getElementById('end').value
-  })
-  console.log(data)
+  var data = source.getData("Text");
+  if (data.length > 0) {
+    if (data.indexOf("\t") > -1) {
+      var columns = data.split("\n");
+      $.each(columns, function () {
+        var values = this.split("\t");
+        $.each(values, function () {
+          $start.val(this);
+          if ($start.closest('td').next('td').find('input')[0] != undefined) {
+          $start = $start.closest('td').next('td').find('input');
+          }
+          else
+          { 
+            return false;  
+          }
+        });
+        $start = $start.closest('td').parent().next('tr').children('td:first').find('input');
+      });
+      e.preventDefault();
+    }
+  }
 });
-

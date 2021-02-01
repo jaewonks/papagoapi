@@ -9,6 +9,18 @@ body {
 input {
   width: 100px;
 }
+table th {
+  font-size: 15px;
+  text-align: left;
+}
+table tr td { padding : 0px 0px 0px 0px; }
+table tr td:nth-child(1) input {
+  width: 400px;
+}
+table tr td input, table tr td {
+  outline: none;
+  border: 0px none;
+}
 button {
   background-color: #e9ff70;
   font: 18px Raleway, sans-serif bold;
@@ -32,6 +44,9 @@ footer {
   margin-top: 80px;
   color: #454545;
 }
-#name {
+tr:nth-child(1) {
   width: 200px;
+}
+#add {
+  background-color: coral;
 }

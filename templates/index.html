@@ -7,30 +7,44 @@
   <link rel="stylesheet" href="{{url_for('static', filename='./index.css')}}"> 
   <title>PapagoAPI</title>
 </head>
-<body><body>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <div class='grid-container' >
     <main>
     <div>
       <form action='/trans' id='submit-form' method='get'>
         <table>
-          <thaed>
-            <tr>상품명</tr>
-            <tr>컬러</tr>
-            <tr>사이즈</tr>
-          </thaed>
-            <tr>
-              <td><input placeholder='name' id='name' name='name'></input></td>
-              <td><input placeholder='color' id='color' name='color'></td>
-              <td><input placeholder='size' id='size' name='size'></input></td>
+          <thead>
+            <th>상품명</th>
+            <th>컬러</th>
+            <th>사이즈</th>
+            <th>가격</th>
+          </thead>
+          <tbody id='table'>
+            <tr id="row">
+              <td><input type='text' placeholder='name' id='name' name='name' /></td>
+              <td><input type='text' placeholder='color' id='color' name='color' /></td>
+              <td><input type='text' placeholder='size' id='size' name='size' /></td>
+              <td><input type='text' placeholder='price' id='price' name='price'/></td>
             </tr>
+            <tr id= "newRow0">
+              <td><input type='text' id="name0" placeholder='name' /></td>
+              <td><input type='text' id="color0" placeholder='color' /></td>
+              <td><input type='text' id="size0" placeholder='size' /></td>
+              <td><input type='text' id="price0" placeholder='price' /></td>
+            </tr>
+          </tbody>  
         </table>  
-        <p><button type='submit'>Create Code</button></p>
+        <p>
+          <button type='button' id='add' onclick="cloneRow()">Create Row</button>
+          <button type='submit'>Create Code</button>
+        </p>
       </form>  
     </div>
     <div id='results' ></div>
     </main>
     <footer>All rights reserved by Londonlabel &copy<script>document.write(new Date().getFullYear())</script></footer>
-  </div> 
-  <!--<script src='index.js'></script>-->
+  </div>
+  <script src={{url_for('static', filename='./index.js')}}></script> 
 </body>
 </html>
