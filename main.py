@@ -119,38 +119,12 @@ def papago(text):
   result = response.json()
   result1 = result['message']['result']['translatedText']
   translated = result1.upper()
-  print(translated)
+  # print(translated)
   return translated
 
 @application.route('/')
 def index():
-  return render_template('index.html')
-
-@application.route('/trans', methods=['POST'])
-def trans():
-  if request.method == 'POST':
-    # 뭔가 반복문과 데이터 가공이.. 
-    name = request.form['name']
-    color = request.form['color']
-    size = request.form['size']
-    price = request.form['price']
-    print('name :', name)
-    print('color :', color)
-    print('size :', size)
-
-    first = init(name)
-    traname = papago(name)
-    orgname = abbre(traname)
-    second = char(orgname)[:4]
-    third = papago(color)[:2]
-    forth = shoesize(size)
-
-    code = str(first) + str(second) + str(third) + str(price)
-    codeShoes = str(first) + str(second) + str(third) + str(price) + 'S' + str(forth)
-    if forth:
-      return codeShoes
-    else :  
-      return code    
+  return render_template('index.html')  
 
 @application.route('/test', methods=['POST'])
 def test():
@@ -161,11 +135,31 @@ def test():
     #  print(list)
     dic = {}
     for i, v in enumerate(list(data.values())[0]):
-      print(i)
+      # print(i)
       dic[i] = {}
       for idx, key in enumerate(data.keys()): 
         dic[i][key] = list(data.values())[idx][i] 
-    print(dic)     
+
+    # print(dic) 
+
+    for value in dic.items():
+        # print(value)
+        # print(list(value)[1])
+        first = init(list(value)[1]['name'])
+        traname = papago(list(value)[1]['name'])
+        orgname = abbre(traname)
+        second = char(orgname)[:4]
+        third = papago(list(value)[1]['color'])[:2]
+        forth = shoesize(list(value)[1]['size'])
+        price = list(value)[1]['price']
+        
+        code = str(first) + str(second) + str(third) + str(price)
+        codeShoes = str(first) + str(second) + str(third) + str(price) + 'S' + str(forth)
+        if forth:
+          print(codeShoes)
+        else :  
+          print(code)  
+
     return data  
 
 if __name__ == '__main__':
