@@ -126,16 +126,18 @@ def papago(text):
 def index():
   return render_template('index.html')
 
-@application.route('/trans', methods=['GET'])
+@application.route('/trans', methods=['POST'])
 def trans():
-  if request.method == 'GET':
-    name = request.args.get('name')
-    color = request.args.get('color')
-    size = request.args.get('size')
-    price = request.args.get('price')
+  if request.method == 'POST':
+    # 뭔가 반복문과 데이터 가공이.. 
+    name = request.form['name']
+    color = request.form['color']
+    size = request.form['size']
+    price = request.form['price']
     print('name :', name)
     print('color :', color)
     print('size :', size)
+
     first = init(name)
     traname = papago(name)
     orgname = abbre(traname)
@@ -148,7 +150,23 @@ def trans():
     if forth:
       return codeShoes
     else :  
-      return code
+      return code    
+
+@application.route('/test', methods=['POST'])
+def test():
+  if request.method == 'POST':
+    data = request.form.to_dict(flat=False)
+    # jsonArray = data['name']
+    # for list in jsonArray:
+    #  print(list)
+    dic = {}
+    for i, v in enumerate(list(data.values())[0]):
+      print(i)
+      dic[i] = {}
+      for idx, key in enumerate(data.keys()): 
+        dic[i][key] = list(data.values())[idx][i] 
+    print(dic)     
+    return data  
 
 if __name__ == '__main__':
   application.run(host='0.0.0.0', port=5000)

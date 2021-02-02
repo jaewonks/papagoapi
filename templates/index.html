@@ -12,7 +12,7 @@
   <div class='grid-container' >
     <main>
     <div>
-      <form action='/trans' id='submit-form' method='get'>
+      <form action='/test' id='submit-form' method='post'>
         <table>
           <thead>
             <th>상품명</th>
@@ -22,16 +22,16 @@
           </thead>
           <tbody id='table'>
             <tr id="row">
-              <td><input type='text' placeholder='name' id='name' name='name' /></td>
-              <td><input type='text' placeholder='color' id='color' name='color' /></td>
-              <td><input type='text' placeholder='size' id='size' name='size' /></td>
+              <td><input type='text' placeholder='name' id='name' name='name'/></td>
+              <td><input type='text' placeholder='color' id='color' name='color'/></td>
+              <td><input type='text' placeholder='size' id='size' name='size'/></td>
               <td><input type='text' placeholder='price' id='price' name='price'/></td>
             </tr>
             <tr id= "newRow0">
-              <td><input type='text' id="name0" placeholder='name' /></td>
-              <td><input type='text' id="color0" placeholder='color' /></td>
-              <td><input type='text' id="size0" placeholder='size' /></td>
-              <td><input type='text' id="price0" placeholder='price' /></td>
+              <td><input type='text' id="name0" placeholder='name' name='name'/></td>
+              <td><input type='text' id="color0" placeholder='color' name='color'/></td>
+              <td><input type='text' id="size0" placeholder='size' name='size'/></td>
+              <td><input type='text' id="price0" placeholder='price' name='price'/></td>
             </tr>
           </tbody>  
         </table>  
