@@ -3,7 +3,7 @@
 }
 body {
   height: 100vh; 
-  font: 20px Raleway, sans-serif;
+  font: 15px sans-serif;
   margin: 30px;
 }
 input {
@@ -50,3 +50,5 @@ tr:nth-child(1) {
 #add {
   background-color: coral;
 }
+.form-container {font-size: 12px;}
+.form-container table th { padding-right: 50px; }

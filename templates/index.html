@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{url_for('static', filename='./index.css')}}"> 
   <title>PapagoAPI</title>
 </head>
@@ -12,7 +11,7 @@
   <div class='grid-container' >
     <main>
     <div>
-      <form action='/test' id='submit-form' method='post'>
+      <form action='/create' id='submit-form' method='post'>
         <table>
           <thead>
             <th>상품명</th>
@@ -40,6 +39,23 @@
           <button type='submit'>Create Code</button>
         </p>
       </form>  
+      <hr/>
+      {% if result %} <!--반복문으로 값을 받아야함-->
+        <div class="form-container">
+          <table>
+            <thead>
+              <th>코드</th>
+            </thead>
+            <tbody>
+              {% for i in result %}
+              <tr>
+                <td>{{ i }}</td>
+              </tr>
+              {% endfor%}
+            </tbody>
+          </table>  
+        </div>
+      {% endif %} 
     </div>
     <div id='results' ></div>
     </main>

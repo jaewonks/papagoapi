@@ -71,15 +71,17 @@ def init(name):
     return 'LRP' 
   elif '막스마라' in name:
     return 'MAX'
-                    
+
+def nochar(str):
+    pattern = '[^\w\s]'                                          
+    text = re.sub(pattern=pattern, repl=' ', string=str).replace(' ','')
+    return text
+
 def char(name):
   spname = name.split(' ')[1] 
   if len(spname) < 4: 
     spname = name.split(' ')[1] + name.split(' ')[2]
-
-  pattern = '[^\w\s]'                                          
-  text = re.sub(pattern=pattern, repl=' ', string=spname).replace(' ','')
-  return text
+  return nochar(spname)
 
 def abbre(name):
   if 'BOTTEGA VENETA' in name:
@@ -94,6 +96,8 @@ def abbre(name):
     return name.replace('TOM BROWN','TOMBROWN')
   elif 'MAX MARA ' in name:
     return name.replace('MAX MARA','MAXMARA')
+  elif 'ALEXANDER MCQUEEN' in name:
+    return name.replace('ALEXANDER MCQUEEN','ALEXANDERMCQUEEN')  
   else : 
     return name
 
@@ -119,48 +123,46 @@ def papago(text):
   result = response.json()
   result1 = result['message']['result']['translatedText']
   translated = result1.upper()
-  # print(translated)
   return translated
 
 @application.route('/')
 def index():
   return render_template('index.html')  
 
-@application.route('/test', methods=['POST'])
-def test():
+@application.route('/create', methods=['POST'])
+def create():
   if request.method == 'POST':
     data = request.form.to_dict(flat=False)
-    # jsonArray = data['name']
-    # for list in jsonArray:
-    #  print(list)
     dic = {}
     for i, v in enumerate(list(data.values())[0]):
-      # print(i)
       dic[i] = {}
       for idx, key in enumerate(data.keys()): 
         dic[i][key] = list(data.values())[idx][i] 
 
-    # print(dic) 
-
+    resultobj = {}    
+    resultcode = []
     for value in dic.items():
-        # print(value)
-        # print(list(value)[1])
-        first = init(list(value)[1]['name'])
-        traname = papago(list(value)[1]['name'])
-        orgname = abbre(traname)
-        second = char(orgname)[:4]
-        third = papago(list(value)[1]['color'])[:2]
-        forth = shoesize(list(value)[1]['size'])
-        price = list(value)[1]['price']
-        
-        code = str(first) + str(second) + str(third) + str(price)
-        codeShoes = str(first) + str(second) + str(third) + str(price) + 'S' + str(forth)
-        if forth:
-          print(codeShoes)
-        else :  
-          print(code)  
-
-    return data  
-
+      dic = list(value)[1]
+      first = init(list(value)[1]['name'])
+      traname = papago(list(value)[1]['name'])
+      orgname = abbre(traname)
+      second = char(orgname)[:4]
+      third = papago(list(value)[1]['color'])[:2]
+      forth = shoesize(list(value)[1]['size'])
+      price = list(value)[1]['price']
+      
+      if forth:
+        codeShoes = nochar(str(first) + str(second) + str(third) + str(price) + 'S' + str(forth))
+        result = codeShoes 
+      else : 
+        code = nochar(str(first) + str(second) + str(third) + str(price)) 
+        result = code
+      
+      resultcode.append(result)
+      resultobj[index] = dic
+      print(resultcode) 
+      print(resultobj)
+      #print(resultobj)
+    return render_template('index.html', result = resultcode)
 if __name__ == '__main__':
   application.run(host='0.0.0.0', port=5000)
